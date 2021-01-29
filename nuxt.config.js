@@ -1,5 +1,26 @@
 import colors from 'vuetify/es5/util/colors'
 
+import axios from 'axios'
+const axiosconfig = {
+  headers: {
+    Authorization:
+      'Bearer skRFEruFoEKvBj9wxa917nlrzN4aCSx8wAap1bEcf1OH9X5Ynh21OzY4k2mZ8195SMDOgWOMZWpwmhWBS6RxpioF25b1TvSCYJGJZkAlFQvC5qCOx7466kJK5z0hMiqZfxbUVtXd9gw0EumrCg7z4ImVtrP0R1phVQpRYHDmK325iMzsDbBA',
+  },
+}
+
+let dynamicRoutes = () => {
+  return axios
+    .get(
+      `https://g9s2t6zf.api.sanity.io/v1/data/query/cursos?query=*%5B_type%20%3D%3D%20'course'%5D%7B%0A_id%2C%0A%22slug%22%3Aslug.current%0A%7D%0A%0A`,
+      axiosconfig
+    )
+    .then((res) => {
+      console.log(res.data)
+
+      return res.data.result.map((el) => `/detalle-curso/${el.slug}/`)
+    })
+}
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -26,6 +47,15 @@ export default {
     ],
   },
 
+  generate: {
+    // routes: ['/'],
+    routes: dynamicRoutes,
+  },
+
+  router: {
+    base: process.env.NODE_ENV === 'development' ? '/' : '/',
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [{ src: '~assets/css/main.css', lang: 'css' }],
 
@@ -46,7 +76,23 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxtjs/axios',
     '@nuxt/content',
+    [
+      'nuxt-svg-sprite-module',
+      {
+        directory: '~/assets/images/svgsprite',
+        // Optional template location: defaults to __dirname + /app.html
+        //     templateLocation: "src/app.html",
+        options: {
+          // Configuration options:
+          // https://github.com/jkphl/svg-sprite#configuration-basics
+        },
+      },
+    ],
   ],
+
+  axios: {
+    baseURL: 'http://localhost:3000',
+  },
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},

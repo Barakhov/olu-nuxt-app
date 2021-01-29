@@ -1,10 +1,23 @@
 <template>
   <v-app class="myFont">
-    <v-app-bar :clipped-left="clipped" fixed app>
+    <v-app-bar
+      :clipped-left="clipped"
+      fixed
+      app
+      :height="100"
+      flat
+      :color="'#FFF'"
+      ><nuxt-link to="/">
+        <svg class="icon__svg">
+          <use class="icon__use" :xlink:href="'#icon-olu-logo-desktop'"></use>
+        </svg>
+      </nuxt-link>
+      <v-app-bar-title class="logo-claim"
+        >Café y cigarro -> figura de barro al
+        <strong>99%</strong>
+      </v-app-bar-title>
 
-      <v-toolbar-title v-text="title" />
       <v-spacer />
-
     </v-app-bar>
 
     <v-main>
@@ -16,13 +29,12 @@
     <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
-
   </v-app>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       clipped: false,
       drawer: false,
@@ -31,19 +43,30 @@ export default {
         {
           icon: 'mdi-apps',
           title: 'Welcome',
-          to: '/'
+          to: '/',
         },
         {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
-          to: '/inspire'
-        }
+          to: '/inspire',
+        },
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'One Level Up'
+      title: 'One Level Up',
     }
-  }
+  },
 }
 </script>
+
+<style scoped>
+/* temp styles of course jaja */
+
+.logo-claim {
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 56px;
+  margin-left: -56px;
+}
+</style>

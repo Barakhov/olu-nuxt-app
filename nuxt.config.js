@@ -11,13 +11,15 @@ const axiosconfig = {
 let dynamicRoutes = () => {
   return axios
     .get(
-      `https://g9s2t6zf.api.sanity.io/v1/data/query/cursos?query=*%5B_type%20%3D%3D%20'course'%5D%7B%0A_id%2C%0A%22slug%22%3Aslug.current%0A%7D%0A%0A`,
+      `https://g9s2t6zf.api.sanity.io/v1/data/query/cursos?query=*%5B(_type%20%3D%3D%20'school'%20%7C%7C%20_type%20%3D%3D%20'course')%5D%7B%0A_id%2C%0A_type%2C%20%20%0A%22slug%22%3Aslug.current%0A%7D%0A%0A`,
       axiosconfig
     )
     .then((res) => {
-      console.log(res.data)
-
-      return res.data.result.map((el) => `/detalle-curso/${el.slug}/`)
+      return res.data.result.map((el) =>
+        el._type === 'school'
+          ? `/detalle-escuela/${el.slug}/`
+          : `/detalle-curso/${el.slug}/`
+      )
     })
 }
 
@@ -89,10 +91,6 @@ export default {
       },
     ],
   ],
-
-  axios: {
-    baseURL: 'http://localhost:3000',
-  },
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},

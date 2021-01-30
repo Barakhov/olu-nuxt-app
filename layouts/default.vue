@@ -8,7 +8,7 @@
       flat
       :color="'#FFF'"
       ><nuxt-link to="/">
-        <svg class="icon__svg">
+        <svg class="logo-svg">
           <use class="icon__use" :xlink:href="'#icon-olu-logo-desktop'"></use>
         </svg>
       </nuxt-link>
@@ -62,6 +62,24 @@ export default {
 
 <style scoped>
 /* temp styles of course jaja */
+.logo-svg {
+  -webkit-animation: filter-animation 12s infinite;
+  animation: filter-animation 12s infinite;
+}
+
+@keyframes filter-animation {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+
+  50% {
+    filter: hue-rotate(360deg);
+  }
+
+  100% {
+    filter: hue-rotate(0deg);
+  }
+}
 
 .logo-claim {
   font-size: 16px;
